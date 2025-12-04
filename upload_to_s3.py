@@ -1,11 +1,9 @@
 from pprint import pprint as print
 from datetime import datetime, timezone
 import boto3
-from pyspark.sql import SparkSession
 import os
 
 BUCKET_NAME = os.environ.get('BUCKET_NAME', 'smw-walmart-dms')
-spark = SparkSession.builder.getOrCreate()
 
 def get_new_or_modified_csv_keys(tables, s3_last_modified):
     csv_keys = []
