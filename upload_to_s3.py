@@ -1,9 +1,10 @@
-from pprint import pprint as print
-from datetime import datetime, timezone
-import boto3
-import os
 
-BUCKET_NAME = os.environ.get('BUCKET_NAME', 'smw-walmart-dms')
+import os
+from datetime import datetime, timezone
+
+import boto3
+
+from constants import BUCKET_NAME
 
 def get_new_or_modified_csv_keys(tables, s3_last_modified):
     csv_keys = []
@@ -29,6 +30,7 @@ def get_s3_last_modified(s3, table_name):
 
     return file_updates
 
+
 def main():
     # Boto3 client
     s3 = boto3.client('s3')
@@ -39,12 +41,14 @@ def main():
         s3_last_modified[table] = get_s3_last_modified(s3, table)
     keys = get_new_or_modified_csv_keys(tables, s3_last_modified)
     for key in keys:
+        csv = open(f'{os.curdir}/{key}', 'rb')
         s3.put_object(
             Bucket=BUCKET_NAME,
             Key=key,
-            Body=open(f'./{key}', 'rb')
+            Body=csv
         )
+        csv.close()
+        print(f'Uploaded {key} to S3')
 
 if __name__ == '__main__':
     main()
-
