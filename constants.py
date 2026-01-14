@@ -1,1 +1,0 @@
-BUCKET_NAME = 'smw-walmart-dms'
