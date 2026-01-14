@@ -10,6 +10,8 @@ from file_listener import FileHandler
 from upload_to_s3 import get_new_or_modified_csv_keys, get_s3_last_modified
 
 
+BUCKET_NAME = os.getenv('BUCKET_NAME')
+
 def main(file_path=None, event_type=None):
     # Boto3 client
     s3 = boto3.client('s3')
