@@ -6,7 +6,6 @@ import platform
 import boto3
 from watchdog.observers import Observer
 
-from constants import BUCKET_NAME
 from file_listener import FileHandler
 from upload_to_s3 import get_new_or_modified_csv_keys, get_s3_last_modified
 
